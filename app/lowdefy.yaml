@@ -22,6 +22,8 @@ auth:
     id: mdb_adapter
     type: MongoDBAdapter
     properties:
+      invite:
+        required: true # Set to false to allow sign-ups without an invite
       databaseUri:
         _secret: MONGODB_URI
 
@@ -29,6 +31,9 @@ auth:
     - id: email
       type: EmailProvider
       properties:
+        # Configure SMTP server as described here:
+        # https://next-auth.js.org/providers/email
+        # Any SMTP server can be used
         server:
           host: smtp.sendgrid.net
           port: 465
@@ -36,7 +41,8 @@ auth:
             user: apikey
             pass:
               _secret: SENDGRID_API_KEY
-        from: auth@mail.mrm.support
+        from:
+          _secret: AUTH_FROM_EMAIL_ADDRESS
   userFields:
     id: user.id
     profile: user.profile
