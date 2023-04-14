@@ -3,4 +3,3 @@
 **/.env
 **/node_modules/**
 **/dist/**
-api/dev/**
