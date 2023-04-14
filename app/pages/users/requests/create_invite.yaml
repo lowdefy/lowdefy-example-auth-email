@@ -1,0 +1,77 @@
+id: create_invite
+type: MongoDBUpdateOne
+connectionId: user_invites
+payload:
+  invite:
+    _state: user
+
+properties:
+  options:
+    upsert: true
+  filter:
+    inviteEmail:
+      _payload: invite.inviteEmail
+    accepted:
+      $exists: false
+  update:
+    - $addFields:
+        expires:
+          $dateFromParts:
+            year:
+              $year:
+                _date: now
+            month:
+              $add:
+                - $month:
+                    _date: now
+                - 3
+            day:
+              $dayOfMonth:
+                _date: now
+            hour: 0
+    - $set:
+        _id:
+          _if_none:
+            - _payload: invite._id
+            - _uuid: true
+        inviteEmail:
+          _string.toLowerCase:
+            _string.trim:
+              _if_none:
+                - _payload: invite.inviteEmail
+                - ''
+        open: true
+        profile:
+          given_name:
+            _string.trim:
+              _if_none:
+                - _payload: invite.profile.given_name
+                - ''
+          family_name:
+            _string.trim:
+              _if_none:
+                - _payload: invite.profile.family_name
+                - ''
+          name:
+            _string.concat:
+              - _string.trim:
+                  _if_none:
+                    - _payload: invite.profile.given_name
+                    - ''
+              - ' '
+              - _string.trim:
+                  _if_none:
+                    - _payload: invite.profile.family_name
+                    - ''
+        roles:
+          _if_none:
+            - _payload: invite.roles
+            - []
+        app_attributes:
+          _if_none:
+            - _payload: invite.app_attributes
+            - {}
+        updated:
+          _ref: shared/change_stamp.yaml
+        created:
+          _ref: shared/change_stamp.yaml

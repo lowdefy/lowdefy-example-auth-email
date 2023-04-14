@@ -1,0 +1,67 @@
+id: user_avatar_box
+type: Box
+blocks:
+  - id: login_button
+    type: Button
+    visible:
+      _not:
+        _user: true
+    properties:
+      title: Login
+      icon: AiOutlineLogin
+      shape: round
+    events:
+      onClick:
+        - id: link_to_login
+          type: Link
+          params:
+            pageId: login
+
+  - id: user_profile_link
+    type: Box
+    visible:
+      _not:
+        _not:
+          _user: true
+    layout:
+      contentGutter: 8
+      contentAlign: middle
+    events:
+      onClick:
+        - id: link_to_profile
+          type: Link
+          params:
+            pageId: profile
+    blocks:
+      - id: user_name
+        type: Html
+        layout:
+          flex: 0 1 auto
+        style:
+          color: white
+        visible:
+          _gt:
+            - _media: width
+            - 992
+        properties:
+          html:
+            _user: profile.name
+      - id: user_avatar
+        type: Avatar
+        layout:
+          flex: 0 1 auto
+        properties:
+          _if:
+            test:
+              _ne:
+                - _user: profile.picture
+                - null
+            then:
+              size: large
+              src:
+                _user: profile.picture
+              alt:
+                _user: profile.name
+            else:
+              size: large
+              icon: AiOutlineUser

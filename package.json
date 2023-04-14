@@ -1,5 +1,5 @@
 {
-  "name": "lowdefy-example-plugins-repo",
+  "name": "lowdefy-example-auth-email-repo",
   "version": "1.0.0",
   "license": "MIT",
   "packageManager": "pnpm@7.12.2",

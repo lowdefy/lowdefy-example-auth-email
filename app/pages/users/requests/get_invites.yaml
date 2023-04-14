@@ -1,0 +1,32 @@
+id: get_invites
+type: MongoDBAggregation
+connectionId: user_invites
+properties:
+  options:
+    readPreference: secondaryPreferred
+  pipeline:
+    - $match:
+        accepted:
+          $ne: true
+    - $project:
+        inviteEmail: 1
+        profile: 1
+        app_attributes: 1
+        roles: 1
+        open:
+          $cond:
+            - $open
+            - ✅
+            - ⛔️
+        expires:
+          $dateToString:
+            date: $expires
+            format: '%Y/%m/%d'
+        created:
+          $dateToString:
+            date: $created.timestamp
+            format: '%Y/%m/%d'
+    - $addFields:
+        app_attributes.companies: $app_attributes.companies.Name
+    - $sort:
+        inviteEmail: 1

@@ -1,0 +1,105 @@
+id: edit-user
+type: PageHeaderMenu
+properties:
+  title: Edit User
+layout:
+  contentJustify: center
+areas:
+  header:
+    blocks:
+      - _ref: pages/users/components/user_avatar.yaml
+
+events:
+  onMount:
+    - id: redirect
+      type: Link
+      skip:
+        _ne:
+          - _input: user_id
+          - null
+      params: users
+    - id: get_user
+      type: Request
+      skip:
+        _eq:
+          - _input: user_id
+          - null
+      params: get_user
+    - id: set_user
+      type: SetState
+      skip:
+        _eq:
+          - _input: user_id
+          - null
+      params:
+        user:
+          _request: get_user
+
+requests:
+  - _ref: pages/users/requests/get_user.yaml
+  - _ref: pages/users/requests/update_user.yaml
+
+blocks:
+  - id: title
+    type: Title
+    style:
+      textAlign: center
+    properties:
+      content: Edit User
+      level: 2
+  - id: content_card
+    type: Card
+    layout:
+      size: 600
+      contentGutter: 16
+      contentJustify: center
+    blocks:
+      - _ref: pages/users/components/profile_form.yaml
+      - id: divider
+        type: Divider
+        properties:
+          title: Access Settings
+      - id: user.roles
+        type: MultipleSelector
+        properties:
+          title: Roles
+          options:
+            _ref: roles.yaml
+      - _ref: pages/users/components/app_attributes.yaml
+      - id: user.disabled
+        type: Switch
+        properties:
+          title: Disabled
+          color: '#f5222d'
+
+      - id: cancel_button
+        type: Button
+        layout:
+          span: 12
+        properties:
+          title: Cancel
+          icon: AiOutlineCloseCircle
+          type: default
+          block: true
+        events:
+          onClick:
+            - id: return_to_users
+              type: Link
+              params: users
+      - id: save_button
+        type: Button
+        layout:
+          span: 12
+        properties:
+          title: Save
+          icon: AiOutlineSave
+          block: true
+        events:
+          onClick:
+            - id: update_user
+              type: Request
+              params:
+                - update_user
+            - id: return_to_users
+              type: Link
+              params: users

@@ -1,0 +1,38 @@
+id: update_profile
+type: MongoDBUpdateOne
+connectionId: users
+payload:
+  _state: user
+properties:
+  filter:
+    _id:
+      _user: id
+  update:
+    $set:
+      updated:
+        _ref: shared/change_stamp.yaml
+      app_attributes.profile_created: true
+      profile:
+        picture:
+          _user: image
+        given_name:
+          _string.trim:
+            _if_none:
+              - _payload: profile.given_name
+              - ''
+        family_name:
+          _string.trim:
+            _if_none:
+              - _payload: profile.family_name
+              - ''
+        name:
+          _string.concat:
+            - _string.trim:
+                _if_none:
+                  - _payload: profile.given_name
+                  - ''
+            - ' '
+            - _string.trim:
+                _if_none:
+                  - _payload: profile.family_name
+                  - ''

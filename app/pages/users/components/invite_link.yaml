@@ -1,0 +1,24 @@
+id: invite_link_label
+type: Label
+properties:
+  title: Invite Link
+visible:
+  _not:
+    _state: user.signed_up
+blocks:
+  - id: invite_link_text
+    type: Paragraph
+    properties:
+      code: true
+      copyable: true
+      content:
+        _nunjucks:
+          template: '{{ origin }}/login?hint={{ hint }}'
+          on:
+            origin:
+              _location: origin
+            hint:
+              _base64.encode:
+                _if_none:
+                  - _state: user.inviteEmail
+                  - ''

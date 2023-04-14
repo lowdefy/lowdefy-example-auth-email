@@ -1,0 +1,12 @@
+id: logged-out
+type: Box
+properties:
+  title: Logged Out
+events:
+  onMount:
+    # TODO: Add logging here?
+    # Else use next-auth events and just redirect to login on logout?
+    - id: redirect_to_login
+      type: Link
+      params:
+        home: true

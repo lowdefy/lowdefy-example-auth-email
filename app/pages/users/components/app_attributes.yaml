@@ -1,0 +1,4 @@
+id: app_attributes
+type: Box
+layout:
+  contentGutter: 8

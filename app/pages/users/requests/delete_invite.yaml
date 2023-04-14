@@ -1,0 +1,10 @@
+id: delete_invite
+type: MongoDBDeleteOne
+connectionId: user_invites
+payload:
+  _id:
+    _input: invite_id
+properties:
+  filter:
+    _id:
+      _payload: _id

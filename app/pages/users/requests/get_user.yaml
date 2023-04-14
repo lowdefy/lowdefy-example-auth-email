@@ -1,0 +1,17 @@
+id: get_user
+type: MongoDBFindOne
+connectionId: users
+payload:
+  user_id:
+    _input: user_id
+properties:
+  query:
+    _id:
+      _payload: user_id
+  options:
+    projection:
+      app_attributes: 1
+      email: 1
+      disabled: 1
+      profile: 1
+      roles: 1

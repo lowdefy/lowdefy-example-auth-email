@@ -1,0 +1,16 @@
+id: get_invite
+type: MongoDBFindOne
+connectionId: user_invites
+payload:
+  invite_id:
+    _input: invite_id
+properties:
+  query:
+    _id:
+      _payload: invite_id
+  options:
+    projection:
+      app_attributes: 1
+      inviteEmail: 1
+      profile: 1
+      roles: 1

@@ -1,0 +1,22 @@
+- id: default
+  links:
+    - id: protected-page
+      type: MenuLink
+      pageId: protected-page
+      properties:
+        title: Protected Page
+    - id: admin
+      type: MenuGroup
+      properties:
+        title: Admin
+      links:
+        - id: users
+          type: MenuLink
+          pageId: users
+          properties:
+            title: Users
+        - id: invites
+          type: MenuLink
+          pageId: invites
+          properties:
+            title: Invites

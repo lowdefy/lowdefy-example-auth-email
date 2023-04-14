@@ -1,0 +1,25 @@
+{
+  "name": "lowdefy-example-auth-email",
+  "version": "0.0.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./auth/adapters": "./src/auth/adapters.js",
+    "./auth/providers": "./src/auth/providers.js",
+    "./types": "./src/types.js"
+  },
+  "files": [
+    "*"
+  ],
+  "scripts": {},
+  "dependencies": {
+    "@lowdefy/helpers": "4.0.0-rc.7",
+    "mongodb": "4.13.0",
+    "next-auth": "4.20.1",
+    "nodemailer": "6.9.1",
+    "saslprep": "1.0.3",
+    "uuid": "9.0.0"
+  },
+  "devDependencies": {}
+}

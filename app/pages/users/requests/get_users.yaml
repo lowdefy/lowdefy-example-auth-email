@@ -1,0 +1,36 @@
+id: get_users
+type: MongoDBAggregation
+connectionId: users
+properties:
+  options:
+    readPreference: secondaryPreferred
+  pipeline:
+    - $project:
+        email: 1
+        profile: 1
+        app_attributes: 1
+        roles: 1
+        active:
+          $cond:
+            - $disabled
+            - ⛔️
+            - ✅
+        created_at:
+          $dateToString:
+            date: $created.timestamp
+            format: '%Y/%m/%d'
+        updated_at:
+          $dateToString:
+            date: $updated.timestamp
+            format: '%Y/%m/%d'
+        signed_up:
+          $cond:
+            - $eq:
+                - $type: $_id
+                - string
+            - ✅
+            - ⛔️
+    - $addFields:
+        app_attributes.companies: $app_attributes.companies.Name
+    - $sort:
+        email: 1

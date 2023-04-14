@@ -1,0 +1,9 @@
+_if_none:
+  - _get:
+      key: links.0.links.0.pageId
+      from:
+        _menu: default
+  - _get:
+      key: links.0.pageId
+      from:
+        _menu: default

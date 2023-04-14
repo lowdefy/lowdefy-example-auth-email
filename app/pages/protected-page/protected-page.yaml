@@ -1,0 +1,6 @@
+id: protected-page
+type: PageHeaderMenu
+areas:
+  header:
+    blocks:
+      - _ref: pages/users/components/user_avatar.yaml

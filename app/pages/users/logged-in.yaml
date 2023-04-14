@@ -1,0 +1,14 @@
+id: logged-in
+type: Box
+events:
+  onMount:
+    - id: logged_in_redirect
+      type: Link
+      params:
+        _if:
+          test:
+            _not:
+              _user: app_attributes.profile_created
+          then: create-profile
+          else:
+            _ref: shared/default_page.yaml

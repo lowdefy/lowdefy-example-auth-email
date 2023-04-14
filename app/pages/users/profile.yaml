@@ -1,0 +1,89 @@
+id: profile
+type: PageHeaderMenu
+properties:
+  title: Profile
+layout:
+  contentJustify: center
+areas:
+  header:
+    blocks:
+      - _ref: pages/users/components/user_avatar.yaml
+
+blocks:
+  - id: title
+    type: Title
+    style:
+      textAlign: center
+    properties:
+      content: Profile
+      level: 2
+  - id: content_card
+    type: Card
+    layout:
+      size: 600
+      contentGutter: 16
+      contentJustify: center
+    blocks:
+      - id: avatar
+        type: Avatar
+        layout:
+          size: auto
+        properties:
+          _if:
+            test:
+              _ne:
+                - _user: profile.picture
+                - null
+            then:
+              size: 120
+              src:
+                _user: profile.picture
+              alt:
+                _nunjucks:
+                  template: 'Profile picture of {{ name }}'
+                  on:
+                    name:
+                      _user: profile.name
+            else:
+              size: 120
+              icon: AiOutlineUser
+      - id: details
+        type: Descriptions
+        properties:
+          column: 1
+          items:
+            - label: Email
+              value:
+                _user: email
+            - label: First Name
+              value:
+                _user: profile.given_name
+            - label: Last Name
+              value:
+                _user: profile.family_name
+      - id: edit_profile_button
+        type: Button
+        layout:
+          span: 12
+        properties:
+          title: Edit Profile
+          icon: AiOutlineEdit
+          block: true
+        events:
+          onClick:
+            - id: edit_profile_link
+              type: Link
+              params: edit-profile
+      - id: logout_button
+        type: Button
+        layout:
+          span: 12
+        properties:
+          title: Logout
+          icon: AiOutlineLogout
+          type: default
+          block: true
+        events:
+          onClick:
+            - id: logout
+              type: Logout

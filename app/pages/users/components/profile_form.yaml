@@ -1,0 +1,54 @@
+id: profile_form
+type: Box
+layout:
+  contentGutter: 16
+
+blocks:
+  - id: avatar_box
+    type: Box
+    blocks:
+      - id: avatar
+        type: Avatar
+        layout:
+          flex: 0 1 auto
+        style:
+          margin: auto
+        properties:
+          _if:
+            test:
+              _ne:
+                - _user: profile.picture
+                - null
+            then:
+              size: 120
+              src:
+                _user: profile.picture
+              alt:
+                _nunjucks:
+                  template: 'Profile picture of {{ name }}'
+                  on:
+                    name:
+                      _user: profile.name
+            else:
+              size: 120
+              icon: AiOutlineUser
+  - id: user.email
+    type: TextInput
+    properties:
+      disabled: true
+      title: Email
+
+  - id: user.profile.given_name
+    type: TextInput
+    required: Please provide your first name.
+    layout:
+      span: 12
+    properties:
+      title: First Name
+  - id: user.profile.family_name
+    type: TextInput
+    required: Please provide your last name.
+    layout:
+      span: 12
+    properties:
+      title: Last Name

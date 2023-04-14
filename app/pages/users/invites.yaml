@@ -1,0 +1,108 @@
+id: invites
+type: PageHeaderMenu
+properties:
+  title: Invites
+layout:
+  contentJustify: center
+areas:
+  header:
+    blocks:
+      - _ref: pages/users/components/user_avatar.yaml
+
+events:
+  onMountAsync:
+    - id: get_invites
+      type: Request
+      params: get_invites
+
+requests:
+  - _ref: pages/users/requests/get_invites.yaml
+blocks:
+  - id: max_width_box
+    type: Box
+    layout:
+      size: 1200
+    blocks:
+      - id: title
+        type: Title
+        layout:
+          flex: 1 1 auto
+        properties:
+          content: Open Invites
+          level: 2
+      - id: invite_button
+        type: Button
+        layout:
+          flex: 0 1 auto
+        properties:
+          title: New Invite
+          icon: AiOutlinePlus
+        events:
+          onClick:
+            - id: link_to_invites
+              type: Link
+              params: new-invite
+      - id: content_card
+        type: Card
+        blocks:
+          - id: users_table
+            type: AgGridAlpine
+            properties:
+              rowStyle:
+                cursor: pointer
+              enableCellTextSelection: true
+              rowData:
+                _request: get_invites
+              defaultColDef:
+                sortable: true
+                resizable: true
+                filter: true
+              columnDefs:
+                - headerName: Open
+                  field: open
+                  width: 90
+                - headerName: Email
+                  field: inviteEmail
+                  width: 200
+                - headerName: First name
+                  field: profile.given_name
+                  width: 150
+                - headerName: Last name
+                  field: profile.family_name
+                  width: 150
+                - headerName: Companies
+                  field: app_attributes.companies
+                  width: 200
+                - headerName: Roles
+                  field: roles
+                  width: 200
+                - headerName: Expires
+                  field: expires
+                  width: 150
+                - headerName: Created at
+                  field: created
+                  width: 150
+                - headerName: Invite Link
+                  field: link
+                  width: 800
+                  cellRenderer:
+                    _function:
+                      __nunjucks:
+                        template: '{{ origin }}/signup?hint={{ hint }}'
+                        on:
+                          origin:
+                            _location: origin
+                          hint:
+                            __base64.encode:
+                              __if_none:
+                                - __args: 0.data.inviteEmail
+                                - ''
+            events:
+              onRowClick:
+                - id: link_to_edit
+                  type: Link
+                  params:
+                    pageId: edit-invite
+                    input:
+                      invite_id:
+                        _event: row._id

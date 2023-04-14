@@ -1,0 +1,121 @@
+id: edit-invite
+type: PageHeaderMenu
+properties:
+  title: Edit Invite
+layout:
+  contentJustify: center
+areas:
+  header:
+    blocks:
+      - _ref: pages/users/components/user_avatar.yaml
+
+events:
+  onMount:
+    - id: redirect
+      type: Link
+      skip:
+        _ne:
+          - _input: invite_id
+          - null
+      params: invites
+    - id: get_invite
+      type: Request
+      skip:
+        _eq:
+          - _input: invite_id
+          - null
+      params: get_invite
+    - id: set_invite
+      type: SetState
+      skip:
+        _eq:
+          - _input: invite_id
+          - null
+      params:
+        user:
+          _request: get_invite
+
+requests:
+  - _ref: pages/users/requests/get_invite.yaml
+  - _ref: pages/users/requests/update_invite.yaml
+  - _ref: pages/users/requests/delete_invite.yaml
+
+blocks:
+  - id: title
+    type: Title
+    style:
+      textAlign: center
+    properties:
+      content: Edit Invite
+      level: 2
+  - id: content_card
+    type: Card
+    layout:
+      size: 600
+      contentGutter: 16
+      contentJustify: center
+    blocks:
+      - _ref: pages/users/components/invite_form.yaml
+      - _ref: pages/users/components/invite_link.yaml
+      - id: divider
+        type: Divider
+        properties:
+          title: Access Settings
+      - id: user.roles
+        type: MultipleSelector
+        properties:
+          title: Roles
+          options:
+            _ref: roles.yaml
+      - _ref: pages/users/components/app_attributes.yaml
+
+      - id: cancel_button
+        type: Button
+        layout:
+          span: 6
+        properties:
+          title: Cancel
+          icon: AiOutlineCloseCircle
+          type: default
+          block: true
+        events:
+          onClick:
+            - id: return_to_invites
+              type: Link
+              params: invites
+      - id: delete_button
+        type: Button
+        layout:
+          span: 6
+        properties:
+          title: Delete
+          icon: AiOutlineDelete
+          block: true
+          type: danger
+          ghost: true
+        events:
+          onClick:
+            - id: delete_invite
+              type: Request
+              params:
+                - delete_invite
+            - id: return_to_invites
+              type: Link
+              params: invites
+      - id: save_button
+        type: Button
+        layout:
+          span: 12
+        properties:
+          title: Save
+          icon: AiOutlineSave
+          block: true
+        events:
+          onClick:
+            - id: update_invite
+              type: Request
+              params:
+                - update_invite
+            - id: return_to_invites
+              type: Link
+              params: invites

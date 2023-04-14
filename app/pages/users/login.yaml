@@ -1,0 +1,88 @@
+id: login
+type: Box
+layout:
+  contentJustify: center
+style:
+  backgroundColor: '#efefef'
+  height: 100vh
+properties:
+  title: Login
+events:
+  onMount:
+    - id: logged_in_redirect
+      type: Link
+      skip:
+        _eq:
+          - _user: id
+          - null
+      params:
+        _ref: shared/default_page.yaml
+    - id: logout
+      type: Logout
+      skip:
+        _eq:
+          - _url_query: error
+          - null
+      params:
+        callbackUrl:
+          pageId: logged-out
+    - id: set_hint
+      type: SetState
+      skip:
+        _eq:
+          - _url_query: hint
+          - null
+      params:
+        email:
+          _base64.decode:
+            _if_none:
+              - _url_query: hint
+              - ''
+
+blocks:
+  - id: content_card
+    type: Card
+    layout:
+      contentGutter: 20
+      size: 500
+    style:
+      marginTop: 100px
+    blocks:
+      - id: logo
+        type: Html
+        style:
+          textAlign: center
+          margin: 20px
+        properties:
+          html: |
+            <img style="width: 80%; max-width: 250px;" src="/logo-light-theme.png" alt="Ingrain logo"/>
+      - id: email
+        type: TextInput
+        properties:
+          title: Email Address
+          size: large
+        events:
+          onPressEnter:
+            - id: login
+              type: Login
+              params:
+                email:
+                  _state: email
+                callbackUrl:
+                  pageId: logged-in
+      - id: login_button
+        type: Button
+        properties:
+          title: Login
+          icon: AiOutlineLogin
+          block: true
+          size: large
+        events:
+          onClick:
+            - id: login
+              type: Login
+              params:
+                email:
+                  _state: email
+                callbackUrl:
+                  pageId: logged-in

@@ -1,0 +1,104 @@
+id: new-invite
+type: PageHeaderMenu
+properties:
+  title: New User
+layout:
+  contentJustify: center
+
+requests:
+  - _ref: pages/users/requests/create_invite.yaml
+areas:
+  header:
+    blocks:
+      - _ref: pages/users/components/user_avatar.yaml
+
+blocks:
+  - id: title
+    type: Title
+    style:
+      textAlign: center
+    properties:
+      content: New Invite
+      level: 2
+  - id: content_card
+    type: Card
+    layout:
+      size: 600
+      contentGutter: 16
+      contentJustify: center
+    blocks:
+      - id: user.inviteEmail
+        type: TextInput
+        required: true
+        properties:
+          title: Email
+        validate:
+          - message: Please provide a valid email address.
+            status: warning
+            pass:
+              _regex: '^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
+          - message: Please provide a valid email address.
+            status: error
+            pass:
+              _regex: '^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
+      - id: user.profile.given_name
+        type: TextInput
+        validate:
+          - message: Please provide a first name.
+            status: warning
+            pass:
+              _not:
+                _type: none
+        properties:
+          title: First Name
+      - id: user.profile.family_name
+        type: TextInput
+        properties:
+          title: Last Name
+        validate:
+          - message: Please provide a last name.
+            status: warning
+            pass:
+              _not:
+                _type: none
+      - id: user.roles
+        type: MultipleSelector
+        properties:
+          title: Roles
+          options:
+            _ref: roles.yaml
+      - _ref: pages/users/components/app_attributes.yaml
+      - id: cancel_button
+        type: Button
+        layout:
+          span: 12
+        properties:
+          title: Cancel
+          icon: AiOutlineCloseCircle
+          type: default
+          block: true
+        events:
+          onClick:
+            - id: return_to_users
+              type: Link
+              params: invites
+      - id: save_button
+        type: Button
+        layout:
+          span: 12
+        properties:
+          title: Save
+          icon: AiOutlineSave
+          block: true
+        events:
+          onClick:
+            - id: validate
+              type: Validate
+            - id: create_invite
+              type: Request
+              params:
+                - create_invite
+            - id: link_to_user
+              type: Link
+              params:
+                pageId: invites

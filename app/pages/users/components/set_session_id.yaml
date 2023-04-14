@@ -1,0 +1,10 @@
+id: set_session_id
+type: SetGlobal
+skip:
+  _not:
+    _eq:
+      - _global: session_id
+      - null
+params:
+  session_id:
+    _uuid: true

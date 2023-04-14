@@ -1,4 +1,80 @@
-lowdefy: 4.0.0-rc.7 # Please check for latest Lowdefy version.
-license: MIT
+lowdefy: 4.0.0-rc.7
+version: 0.0.0
+name: Ingrain CRM
 
-pages: []
+cli:
+  disableTelemetry: true
+  watch:
+    - ../shared
+
+plugins:
+  - name: 'lowdefy-example-auth-email'
+    version: 'workspace:*'
+
+config:
+  homePageId: login
+
+auth:
+  authPages:
+    signIn: '/login'
+    verifyRequest: '/verify-email-request'
+  adapter:
+    id: mdb_adapter
+    type: MongoDBAdapter
+    properties:
+      databaseUri:
+        _secret: MONGODB_URI
+
+  providers:
+    - id: email
+      type: EmailProvider
+      properties:
+        server:
+          host: smtp.sendgrid.net
+          port: 465
+          auth:
+            user: apikey
+            pass:
+              _secret: SENDGRID_API_KEY
+        from: auth@mail.mrm.support
+  userFields:
+    id: user.id
+    profile: user.profile
+    app_attributes: user.app_attributes
+    roles: user.roles
+  pages:
+    protected: true
+    public:
+      - login
+      - logged-out
+      - '404'
+      - signup
+      - verify-email-request
+    roles:
+      admin:
+        - users
+        - invites
+        - new-invite
+        - edit-user
+
+connections:
+  _ref: connections.yaml
+
+menus:
+  _ref: menus.yaml
+
+pages:
+  - _ref: pages/protected-page/protected-page.yaml
+  - _ref: pages/users/create-profile.yaml
+  - _ref: pages/users/edit-invite.yaml
+  - _ref: pages/users/edit-profile.yaml
+  - _ref: pages/users/edit-user.yaml
+  - _ref: pages/users/invites.yaml
+  - _ref: pages/users/logged-in.yaml
+  - _ref: pages/users/logged-out.yaml
+  - _ref: pages/users/login.yaml
+  - _ref: pages/users/new-invite.yaml
+  - _ref: pages/users/profile.yaml
+  - _ref: pages/users/users.yaml
+  - _ref: pages/users/verify-email-request.yaml
+  - _ref: pages/404/404.yaml
