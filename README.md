@@ -10,9 +10,6 @@ It is recommended to authenticate the domain with your email provider to ensure 
 
 - Create a MongoDB cluster and get a URI connection string:
   - Create a free MongoDB database cluster hosted by [MongoDB Atlas](https://www.mongodb.com/try).
-  - Create a new database called `example-email`.
-  - Add new collections to this database called `log-usage`, `user-invites` and `user`.
-  - In the Database access section, create a database user with read access to any database (You can also specify the database as `example-email`).
   - In the main cluster view, click "connect", then "Connect you application". This will give a MongoDB URI connection string. Use the credentials you just created.
   - You can read more about the [Lowdefy MongoDB connector](https://docs.lowdefy.com/MongoDB).
 - Set up your SMTP mail service

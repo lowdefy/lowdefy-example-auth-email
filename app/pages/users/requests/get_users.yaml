@@ -1,6 +1,6 @@
 id: get_users
 type: MongoDBAggregation
-connectionId: users
+connectionId: users_contacts
 properties:
   options:
     readPreference: secondaryPreferred

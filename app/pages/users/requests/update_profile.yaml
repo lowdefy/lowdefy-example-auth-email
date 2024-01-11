@@ -1,6 +1,6 @@
 id: update_profile
 type: MongoDBUpdateOne
-connectionId: users
+connectionId: user_contacts
 payload:
   _state: user
 properties:

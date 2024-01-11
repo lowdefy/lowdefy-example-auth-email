@@ -1,6 +1,6 @@
 lowdefy: 4.0.0-rc.15
 version: 0.0.0
-name: CRM
+name: Email Auth Example
 
 cli:
   disableTelemetry: true
