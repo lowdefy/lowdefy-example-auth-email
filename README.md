@@ -26,6 +26,7 @@ It is recommended to authenticate the domain with your email provider to ensure 
   ```
 
 - In the command console, navigate to your project folder and run the Lowdefy CLI: `pnpx lowdefy@4 dev`.
+- Once an email is sent and a profile is created, you will notice that you now have access to the "Protected Page"
 
 ## More Lowdefy resources
 
