@@ -4,6 +4,8 @@ This example app uses the Auth.js email provider and a custom MongoDB adapter as
 
 This example is configured to use Sendgrid as email provider, but any SMTP mail service can be used, it should be configured as specified here: https://authjs.dev/guides/providers/email
 
+It is recommended to authenticate the domain with your email provider to ensure that emails get delivered successfully. You can view the Sendgrid guides on this here: https://docs.sendgrid.com/ui/account-and-settings/how-to-set-up-domain-authentication
+
 ## Running this example
 
 - Create a MongoDB cluster and get a URI connection string:
