@@ -1,22 +1,8 @@
 ##Admin
-- id: log-usage
+- id: user_contacts
   type: MongoDBCollection
   properties:
-    collection: log-usage
-    databaseUri:
-      _secret: MONGODB_URI
-    write: true
-- id: users
-  type: MongoDBCollection
-  properties:
-    collection: users
-    databaseUri:
-      _secret: MONGODB_URI
-    write: true
-- id: user_invites
-  type: MongoDBCollection
-  properties:
-    collection: user_invites
+    collection: user_contacts
     databaseUri:
       _secret: MONGODB_URI
     write: true

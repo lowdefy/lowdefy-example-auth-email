@@ -1,6 +1,6 @@
 id: get_user
 type: MongoDBFindOne
-connectionId: users
+connectionId: users_contacts
 payload:
   user_id:
     _input: user_id

@@ -1,6 +1,6 @@
-lowdefy: 4.0.0-rc.7
+lowdefy: 4.0.0-rc.15
 version: 0.0.0
-name: Ingrain CRM
+name: Email Auth Example
 
 cli:
   disableTelemetry: true
@@ -8,8 +8,10 @@ cli:
     - ../shared
 
 plugins:
-  - name: 'lowdefy-example-auth-email'
-    version: 'workspace:*'
+  - name: '@lowdefy/community-plugin-nodemailer'
+    version: '1.1.3'
+  - name: '@lowdefy/community-plugin-mongodb'
+    version: '2.1.0'
 
 config:
   homePageId: login
@@ -20,10 +22,10 @@ auth:
     verifyRequest: '/verify-email-request'
   adapter:
     id: mdb_adapter
-    type: MongoDBAdapter
+    type: MultiAppMongoDBAdapter
     properties:
       invite:
-        required: true # Set to false to allow sign-ups without an invite
+        required: false # Set to false to allow sign-ups without an invite
       databaseUri:
         _secret: MONGODB_URI
 
